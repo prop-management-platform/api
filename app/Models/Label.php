@@ -14,6 +14,10 @@ class Label extends Model
         'name',
     ];
 
+    protected $hidden = [
+        'pivot',
+    ];
+
     public $timestamps = false;
 
     public function props(): BelongsToMany
