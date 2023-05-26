@@ -13,8 +13,13 @@ return new class extends Migration
     {
         Schema::create('props', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('shop_id')->nullable()->constrained();
+
             $table->string('name')->nullable();
             $table->text('description')->nullable();
+            $table->integer('price')->nullable();
+            $table->string('image_url')->nullable();
+            $table->integer('quantity')->nullable();
 
             $table->timestamps();
         });
