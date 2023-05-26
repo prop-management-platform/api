@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\V1\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Resources\LoginResponseResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -14,18 +15,11 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): JsonResponse
+    public function store(LoginRequest $request): LoginResponseResource
     {
         $request->authenticate();
 
-        $apiToken = $request->user()->createToken('api-token')->plainTextToken;
-
-        $data = [
-            'api_token' => $apiToken,
-            'user' => $request->user()
-        ];
-
-        return response()->json($data);
+        return new LoginResponseResource($request->user());
     }
 
     /**
