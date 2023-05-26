@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('shop_owner_id')->constrained();
+            $table->string('name');
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('zip_code')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('email')->nullable();
         });
     }
 
