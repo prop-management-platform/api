@@ -1,10 +1,17 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\V1\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\API\V1\IdentityController;
 use Illuminate\Support\Facades\Route;
 
-require __DIR__.'/auth.php'; // Auth routes
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'v1'], function() {
+    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+    Route::middleware(['auth:sanctum'])->group(function() {
+        Route::post('logout', [AuthenticatedSessionController::class, 'destroy']);
+
+        Route::get('identity', IdentityController::class);
+    });
 });
+
